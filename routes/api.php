@@ -8,6 +8,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AboutSec2Controller;
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\PossibleController;
 use App\Http\Controllers\HomeController;
 use App\Models\OurCoreValue;
@@ -18,6 +21,8 @@ use App\Http\Controllers\WhyChooseUsController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\NavbarController;
+use App\Http\Controllers\OurContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,17 +42,30 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+// Dynamic3 heading from our service Design
 Route::middleware('auth:api')->group(function () {
-    Route::get('/hero', [HeroController::class, 'show']);
-    Route::post('/hero', [HeroController::class, 'storeOrUpdate']);
+    Route::get('/services/heading', [HeroController::class, 'show']);
+    Route::post('/services/heading', [HeroController::class, 'storeOrUpdate']);
 });
+
+// Dynamic3 project management from our service Design
 Route::middleware('auth:api')->group(function () {
-    Route::get('/body1', [Body1Controller::class, 'show']);
-    Route::post('/body1', [Body1Controller::class, 'storeOrUpdate']);
+    Route::get('/services/projectmanagement', [Body1Controller::class, 'show']);
+    Route::post('/services/projectmanagement', [Body1Controller::class, 'storeOrUpdate']);
 });
+
+// Dynamic3 support from our service Design
 Route::middleware('auth:api')->group(function () {
-    Route::get('/body2', [Body2Controller::class, 'show']);
-    Route::post('/body2', [Body2Controller::class, 'storeOrUpdate']);
+    Route::get('/services/support', [Body2Controller::class, 'show']);
+    Route::post('/services/support', [Body2Controller::class, 'storeOrUpdate']);
+});
+
+
+// Dynamic3 end to end delivery  from our service Design
+Route::middleware('auth:api')->group(function () {
+    Route::get('/services/delivery', [HomeController::class, 'show']);
+    Route::post('/services/delivery', [HomeController::class, 'storeOrUpdate']);
 });
 
 Route::post('register', [AuthController::class, 'register']);
@@ -56,60 +74,78 @@ Route::get('me', [AuthController::class, 'me'])->middleware('auth:api');
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
 
-// Dynamic Menu Design
+// Dynamic3 Background Design belongs from OurServices
 Route::middleware('auth:api')->group(function () {
-    Route::get('/menu', [MenuController::class, 'show']);
-    Route::post('/menu', [MenuController::class, 'storeOrUpdate']);
+    // Route::get('/menu', [MenuController::class, 'show']);
+    Route::post('/services/background', [MenuController::class, 'storeOrUpdate']);
 });
 
-// Dynamic About us Design
+// Dynamic3 navbar Design
+Route::middleware('auth:api')->group(function () {
+    Route::get('/navbar', [NavbarController::class, 'show']);
+    Route::post('/navbar', [NavbarController::class, 'storeOrUpdate']);
+});
+
+// Dynamic3 About us Design
 Route::middleware('auth:api')->group(function () {
     Route::get('/aboutus', [AboutController::class, 'show']);
     Route::post('/aboutus', [AboutController::class, 'storeOrUpdate']);
 });
 
-// Dynamic Possible Design
+// Dynamic3 About us section2 Design
 Route::middleware('auth:api')->group(function () {
-    Route::get('/possible', [PossibleController::class, 'show']);
-    Route::post('/possible', [PossibleController::class, 'storeOrUpdate']);
+    Route::get('/aboutus-section2', [AboutSec2Controller::class, 'show']);
+    Route::post('/aboutus-section2', [AboutSec2Controller::class, 'storeOrUpdate']);
+});
+
+// Dynamic3 Banner Design
+Route::middleware('auth:api')->group(function () {
+    Route::get('/banner', [BannerController::class, 'show']);
+    Route::post('/banner', [BannerController::class, 'storeOrUpdate']);
 });
 
 
-// Home Design
-Route::middleware('auth:api')->group(function () {
-    Route::get('/home', [HomeController::class, 'show']);
-    Route::post('/home', [HomeController::class, 'storeOrUpdate']);
-});
 
 
-// Dynamic Possible Design
+
+// Dynamic3 it from managed services Design
 Route::middleware('auth:api')->group(function () {
-    Route::get('/ourcorevalue', [OurCoreValueController::class, 'show']);
+    Route::get('/managedservices/it', [OurCoreValueController::class, 'show']);
     Route::post('/ourcorevalue', [OurCoreValueController::class, 'storeOrUpdate']);
 });
 
-// Dynamic Contact Design
+// Dynamic3 powered by MrPc from managed services Design
+Route::middleware('auth:api')->group(function () {
+    Route::get('/managedservices/poweredbymrpc', [OurCoreValueController::class, 'show']);
+    Route::post('/managedservices/poweredbymrpc', [OurCoreValueController::class, 'storeOrUpdate']);
+});
+
+
+// Dynamic3 Contact Design
 Route::middleware('auth:api')->group(function () {
     Route::get('/contact', [ContactController::class, 'show']);
     Route::post('/contact', [ContactController::class, 'storeOrUpdate']);
 });
 
 
-// Dynamic why choose us Design
+// Dynamic3 address Design
 Route::middleware('auth:api')->group(function () {
-    Route::get('/whychooseus', [WhyChooseUsController::class, 'show']);
-    Route::post('/whychooseus', [WhyChooseUsController::class, 'storeOrUpdate']);
+    Route::get('/address', [AddressController::class, 'show']);
+    Route::post('/address', [AddressController::class, 'storeOrUpdate']);
 });
 
-// Dynamic why choose us Design
+// Dynamic3 ourContact Design
 Route::middleware('auth:api')->group(function () {
-    Route::get('/service', [ServiceController::class, 'show']);
-    Route::post('/service', [ServiceController::class, 'storeOrUpdate']);
+    Route::get('/ourcontact', [OurContactController::class, 'show']);
+    Route::post('/ourcontact', [OurContactController::class, 'storeOrUpdate']);
 });
 
 
+
+
 Route::middleware('auth:api')->group(function () {
-    Route::post('/service', [ServiceController::class, 'storeOrUpdate']);
+    Route::get('/managedservices/projectmanagement', [ServiceController::class, 'show']);
+    Route::post('/managedservices/projectmanagement', [ServiceController::class, 'storeOrUpdate']);
 });
 
 Route::middleware('auth:api')->group(function () {

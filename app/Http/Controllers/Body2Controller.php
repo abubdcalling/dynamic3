@@ -3,46 +3,46 @@
 namespace App\Http\Controllers;
 
 use App\Models\Body2;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class Body2Controller extends Controller
 {
     public function show()
     {
-        $Body2 = Body2::first();
-        return response()->json($Body2);
+        $body2 = Body2::first();
+
+        if ($body2 && $body2->icon) {
+            $body2->icon = url('uploads/Body2/' . $body2->icon);
+        }
+
+        return response()->json($body2);
     }
 
-    // Store or update the Body2 section
     public function storeOrUpdate(Request $request)
     {
-        $Body2 = Body2::first();
+        $body2 = Body2::first();
 
-        $Img1 = $Body2->img1 ?? null;
+        $icon = $body2->icon ?? null;
 
-
-        if ($request->hasFile('img1')) {
-            $file = $request->file('img1');
-            $Img1 = time() . '_img1.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/Body2es'), $Img1);
+        if ($request->hasFile('icon')) {
+            $file = $request->file('icon');
+            $icon = time() . '_icon.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/Body2'), $icon);
         }
-
 
         $data = [
-            'text1' => $request->input('text1'),
-            'img1' => $Img1,
+            'title' => $request->input('title'),
+            'icon'  => $icon,
         ];
 
-        if ($Body2) {
-            $Body2->update($data);
+        if ($body2) {
+            $body2->update($data);
         } else {
-            $Body2 = Body2::create($data);
+            $body2 = Body2::create($data);
         }
 
-        // Return full URLs if needed
-        $Body2->img1 = $Body2->img1 ? url('uploads/Body2es/' . $Body2->img1) : null;
+        $body2->icon = $body2->icon ? url('uploads/Body2/' . $body2->icon) : null;
 
-        return response()->json($Body2);
+        return response()->json($body2);
     }
 }
