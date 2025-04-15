@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('why_choose_us', function (Blueprint $table) {
+        Schema::create('banners', function (Blueprint $table) {
             $table->id();
-            
             $table->string('title')->nullable();
+            $table->string('subtitle')->nullable();
             $table->longText('description')->nullable();
-            $table->string('button_name')->nullable();
-            $table->string('button_url')->nullable();
-
+            $table->string('back_img')->nullable(); // e.g. URL or filename
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('why_choose_us');
+        Schema::dropIfExists('banners');
     }
 };

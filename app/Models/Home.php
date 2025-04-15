@@ -9,11 +9,10 @@ class Home extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'main_title',
-        'sub_title_after_main_title',
-        'img',
-        'second_sub_title_content',
-        'name',
-        'link',
+        'title1', 'description1', 'img1',
+        'title2', 'description2', 'img2',
+        'title3', 'description3', 'img3',
+        'title4', 'description4', 'img4',
     ];
+
 }

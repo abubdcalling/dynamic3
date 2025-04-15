@@ -9,9 +9,16 @@ class Body1 extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'heading',
+        'title1',
+        'description1',
+        'title2',
+        'description2',
         'img1',
-        'text1',
         'img2',
-        'text2',
+        'img3',
+        'title3',
+        'description3',
     ];
+    
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hero;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class HeroController extends Controller
@@ -18,31 +17,15 @@ class HeroController extends Controller
     // Store or update the hero section
     public function storeOrUpdate(Request $request)
     {
-        // dd($request->all());
         $hero = Hero::first();
 
-        $backImgName = $hero->back_img ?? null;
-        $mblImgName = $hero->mbl_img ?? null;
-
-        if ($request->hasFile('back_img')) {
-            $file = $request->file('back_img');
-            $backImgName = time() . '_back.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/heroes'), $backImgName);
-        }
-
-        if ($request->hasFile('mbl_img')) {
-            $file = $request->file('mbl_img');
-            $mblImgName = time() . '_mbl.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/heroes'), $mblImgName);
-        }
-
         $data = [
-            'title' => $request->input('title'),
-            'sub_title' => $request->input('sub_title'),
-            'link1' => $request->input('link1'),
-            'link2' => $request->input('link2'),
-            'back_img' => $backImgName,
-            'mbl_img' => $mblImgName,
+            'title'         => $request->input('title'),
+            'subtitle'      => $request->input('subtitle'),
+            'description'   => $request->input('description'),
+            'button_title'  => $request->input('button_title'),
+            'button_name'   => $request->input('button_name'),
+            'button_url'    => $request->input('button_url'),
         ];
 
         if ($hero) {
@@ -51,11 +34,6 @@ class HeroController extends Controller
             $hero = Hero::create($data);
         }
 
-        // Return full URLs if needed
-        $hero->back_img = $hero->back_img ? url('uploads/heroes/' . $hero->back_img) : null;
-        $hero->mbl_img = $hero->mbl_img ? url('uploads/heroes/' . $hero->mbl_img) : null;
-
         return response()->json($hero);
     }
-
 }

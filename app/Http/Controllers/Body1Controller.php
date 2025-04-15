@@ -1,57 +1,74 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers;
 
 use App\Models\Body1;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class Body1Controller extends Controller
 {
-    // Get the Body1 data
     public function show()
     {
-        $Body1 = Body1::first();
-        return response()->json($Body1);
+        $body1 = Body1::first();
+
+        if ($body1) {
+            $body1->img1 = $body1->img1 ? url('uploads/Body1/' . $body1->img1) : null;
+            $body1->img2 = $body1->img2 ? url('uploads/Body1/' . $body1->img2) : null;
+            $body1->img3 = $body1->img3 ? url('uploads/Body1/' . $body1->img3) : null;
+        }
+
+        return response()->json($body1);
     }
 
-    // Store or update the Body1 section
     public function storeOrUpdate(Request $request)
     {
-        $Body1 = Body1::first();
+        $body1 = Body1::first();
 
-        $Img1 = $Body1->img1 ?? null;
-        $Img2 = $Body1->img2 ?? null;
+        $img1 = $body1->img1 ?? null;
+        $img2 = $body1->img2 ?? null;
+        $img3 = $body1->img3 ?? null;
 
         if ($request->hasFile('img1')) {
             $file = $request->file('img1');
-            $Img1 = time() . '_img1.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/Body1es'), $Img1);
+            $img1 = time() . '_img1.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/Body1'), $img1);
         }
 
         if ($request->hasFile('img2')) {
             $file = $request->file('img2');
-            $Img2 = time() . '_img2.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/Body1es'), $Img2);
+            $img2 = time() . '_img2.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/Body1'), $img2);
+        }
+
+        if ($request->hasFile('img3')) {
+            $file = $request->file('img3');
+            $img3 = time() . '_img3.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/Body1'), $img3);
         }
 
         $data = [
-            'text1' => $request->input('text1'),
-            'text2' => $request->input('text2'),
-            'img1' => $Img1,
-            'img2' => $Img2,
+            'heading'       => $request->input('heading'),
+            'title1'        => $request->input('title1'),
+            'description1'  => $request->input('description1'),
+            'title2'        => $request->input('title2'),
+            'description2'  => $request->input('description2'),
+            'img1'          => $img1,
+            'img2'          => $img2,
+            'img3'          => $img3,
+            'title3'        => $request->input('title3'),
+            'description3'  => $request->input('description3'),
         ];
 
-        if ($Body1) {
-            $Body1->update($data);
+        if ($body1) {
+            $body1->update($data);
         } else {
-            $Body1 = Body1::create($data);
+            $body1 = Body1::create($data);
         }
 
-        // Return full URLs if needed
-        $Body1->img1 = $Body1->img1 ? url('uploads/Body1es/' . $Body1->img1) : null;
-        $Body1->img2 = $Body1->img2 ? url('uploads/Body1es/' . $Body1->img2) : null;
+        $body1->img1 = $body1->img1 ? url('uploads/Body1/' . $body1->img1) : null;
+        $body1->img2 = $body1->img2 ? url('uploads/Body1/' . $body1->img2) : null;
+        $body1->img3 = $body1->img3 ? url('uploads/Body1/' . $body1->img3) : null;
 
-        return response()->json($Body1);
+        return response()->json($body1);
     }
 }

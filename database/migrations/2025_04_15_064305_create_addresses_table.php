@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('why_choose_us', function (Blueprint $table) {
+        Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            
-            $table->string('title')->nullable();
-            $table->longText('description')->nullable();
-            $table->string('button_name')->nullable();
-            $table->string('button_url')->nullable();
-
+            $table->string('title')->nullable();    // Title of the location
+            $table->string('location')->nullable(); // Actual location/address
+            $table->string('icon')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('why_choose_us');
+        Schema::dropIfExists('addresses');
     }
 };

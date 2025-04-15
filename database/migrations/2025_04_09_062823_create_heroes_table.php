@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('heroes', function (Blueprint $table) {
             $table->id();
-            $table->string('back_img')->nullable();
-            $table->string('mbl_img')->nullable();
             $table->string('title')->nullable();
-            $table->string('sub_title')->nullable();
-            $table->string('link1')->nullable();
-            $table->string('link2')->nullable();
+            $table->string('subtitle')->nullable();
+            $table->longText('description')->nullable();
+            $table->string('button_title')->nullable();
+            $table->string('button_name')->nullable();
+            $table->string('button_url')->nullable();
+
             $table->timestamps();
         });
     }

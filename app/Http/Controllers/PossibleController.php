@@ -1,38 +1,45 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Possible;
+use Illuminate\Http\Request;
 
 class PossibleController extends Controller
 {
+    // Get the possible data
     public function show()
     {
         $possible = Possible::first();
         return response()->json($possible);
     }
 
-    // Store or update the Possible section
+    // Store or update the possible data
     public function storeOrUpdate(Request $request)
     {
         $possible = Possible::first();
 
         $imgName = $possible->img ?? null;
+        $logoName = $possible->logo ?? null;
 
-        if ($request->hasFile('img')) {  // handle image upload
+        // Handle image uploads
+        if ($request->hasFile('img')) {
             $file = $request->file('img');
-            $imgName = time() . '_possible.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/Possibles'), $imgName);
+            $imgName = time() . '_img.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/possibles'), $imgName);
+        }
+
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            $logoName = time() . '_logo.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/possibles'), $logoName);
         }
 
         $data = [
-            'img'               => $imgName,
-            'title1'            => $request->input('title1'),
-            'title1_content'    => $request->input('title1_content'),
-            'title2'            => $request->input('title2'),
-            'title2_content'    => $request->input('title2_content'),
+            'title'       => $request->input('title'),
+            'logo'        => $logoName,
+            'description' => $request->input('description'),
+            'img'         => $imgName,
         ];
 
         if ($possible) {
@@ -41,8 +48,9 @@ class PossibleController extends Controller
             $possible = Possible::create($data);
         }
 
-        // Return full image URL for frontend
-        $possible->img = $possible->img ? url('uploads/Possibles/' . $possible->img) : null;
+        // Return full image URLs
+        $possible->img = $possible->img ? url('uploads/possibles/' . $possible->img) : null;
+        $possible->logo = $possible->logo ? url('uploads/possibles/' . $possible->logo) : null;
 
         return response()->json($possible);
     }

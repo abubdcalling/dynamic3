@@ -13,24 +13,12 @@ return new class extends Migration
     {
         Schema::create('our_core_values', function (Blueprint $table) {
             $table->id();
-            $table->string('main_title')->nullable();
-            $table->string('big_img_right_side')->nullable();
-            
-            $table->string('side_img1')->nullable();
-            $table->string('side_img1_title')->nullable();
-            $table->string('side_img1_content')->nullable();
-
-            $table->string('side_img2')->nullable();
-            $table->string('side_img2_title')->nullable();
-            $table->string('side_img2_content')->nullable();
-
-            $table->string('side_img3')->nullable();
-            $table->string('side_img3_title')->nullable();
-            $table->string('side_img3_content')->nullable();
-
-            $table->string('side_img4')->nullable();
-            $table->string('side_img4_title')->nullable();
-            $table->string('side_img4_content')->nullable();
+            $table->string('title')->nullable();
+            $table->longText('description1')->nullable();
+            $table->longText('description2')->nullable();
+            $table->string('img')->nullable();
+            $table->string('icon1')->nullable();
+            $table->string('icon2')->nullable();
 
 
             $table->timestamps();

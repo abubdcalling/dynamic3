@@ -13,10 +13,20 @@ return new class extends Migration
     {
         Schema::create('body1s', function (Blueprint $table) {
             $table->id();
+            $table->string('heading')->nullable();
+
+            $table->string('title1')->nullable();
+            $table->longText('description1')->nullable();
+
+            $table->string('title2')->nullable();
+            $table->longText('description2')->nullable();
+
             $table->string('img1')->nullable();
-            $table->string('text1')->nullable();
-            $table->string('text2')->nullable();
             $table->string('img2')->nullable();
+            $table->string('img3')->nullable();
+
+            $table->string('title3')->nullable();
+            $table->longText('description3')->nullable();
             $table->timestamps();
         });
     }

@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('why_choose_us', function (Blueprint $table) {
+        Schema::create('our_contacts', function (Blueprint $table) {
             $table->id();
-            
-            $table->string('title')->nullable();
-            $table->longText('description')->nullable();
-            $table->string('button_name')->nullable();
-            $table->string('button_url')->nullable();
+            $table->string('heading')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email_icon')->nullable();
+            $table->string('phone_icon')->nullable();
+            $table->string('copyright')->nullable();
 
             $table->timestamps();
         });
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('why_choose_us');
+        Schema::dropIfExists('our_contacts');
     }
 };

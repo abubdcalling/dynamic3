@@ -10,11 +10,11 @@ class Hero extends Model
     use HasFactory;
 
     protected $fillable = [
-        'back_img',
-        'mbl_img',
         'title',
-        'sub_title',
-        'link1',
-        'link2'
+        'subtitle',
+        'description',
+        'button_title',
+        'button_name',
+        'button_url',
     ];
 }

@@ -5,8 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Menu extends Model
+class Banner extends Model
 {
     use HasFactory;
-    protected $fillable = ['back_img'];
+    protected $fillable = [
+        'title',
+        'subtitle',
+        'description',
+        'back_img',
+    ];
+    
 }

@@ -13,16 +13,11 @@ return new class extends Migration
     {
         Schema::create('abouts', function (Blueprint $table) {
             $table->id();
-            $table->string('main_title')->nullable(); // About Us main title
-            $table->string('img1')->nullable(); // Image 1 path
-            $table->string('img2')->nullable(); // Image 2 path
-            $table->longText('1st_paragraph_subtitle')->nullable(); // Subtitle for 1st paragraph
-            $table->longText('1st_paragraph_content')->nullable(); // Content for 1st paragraph
-            $table->longText('2nd_paragraph_subtitle')->nullable(); // Subtitle for 2nd paragraph
-            $table->longText('2nd_paragraph_content')->nullable(); // Content for 2nd paragraph
-            $table->string('name')->nullable();
-            $table->string('link')->nullable();
-
+            $table->string('title')->nullable();
+            $table->string('subtitle')->nullable();
+            $table->longText('description')->nullable();
+            $table->string('button_name')->nullable();
+            $table->string('button_url')->nullable();
             $table->timestamps();
         });
     }

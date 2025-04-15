@@ -13,9 +13,7 @@ return new class extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->text('link')->nullable();
-
+            $table->string('back_img')->nullable(); // Background image
 
             $table->timestamps();
         });
