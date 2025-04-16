@@ -42,6 +42,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Dynamic3 Background Design belongs from OurServices
+Route::middleware('auth:api')->group(function () {
+    // Route::get('/menu', [MenuController::class, 'show']);
+    Route::post('/services/background', [MenuController::class, 'storeOrUpdate']);
+});
+
 
 // Dynamic3 heading from our service Design
 Route::middleware('auth:api')->group(function () {
@@ -74,11 +80,7 @@ Route::get('me', [AuthController::class, 'me'])->middleware('auth:api');
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
 
-// Dynamic3 Background Design belongs from OurServices
-Route::middleware('auth:api')->group(function () {
-    // Route::get('/menu', [MenuController::class, 'show']);
-    Route::post('/services/background', [MenuController::class, 'storeOrUpdate']);
-});
+
 
 // Dynamic3 navbar Design
 Route::middleware('auth:api')->group(function () {

@@ -15,7 +15,6 @@ class AboutSec2Controller extends Controller
         try {
             $aboutSec2 = AboutSec2::first();
 
-            // Add full URL for img and video
             if ($aboutSec2) {
                 $aboutSec2->img = $aboutSec2->img ? url('uploads/AboutSec2/' . $aboutSec2->img) : null;
                 $aboutSec2->video = $aboutSec2->video ? url('uploads/AboutSec2/' . $aboutSec2->video) : null;
@@ -23,10 +22,12 @@ class AboutSec2Controller extends Controller
 
             return response()->json([
                 'success' => true,
+                'message' => 'About Section 2 retrieved successfully.',
                 'data' => $aboutSec2
             ]);
         } catch (Exception $e) {
             Log::error('Error fetching AboutSec2: ' . $e->getMessage());
+
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve About Section 2.'
@@ -83,7 +84,7 @@ class AboutSec2Controller extends Controller
                 $aboutSec2 = AboutSec2::create($data);
             }
 
-            // Add full URLs to return
+            // Add full URLs
             $aboutSec2->img = $aboutSec2->img ? url('uploads/AboutSec2/' . $aboutSec2->img) : null;
             $aboutSec2->video = $aboutSec2->video ? url('uploads/AboutSec2/' . $aboutSec2->video) : null;
 
@@ -94,6 +95,7 @@ class AboutSec2Controller extends Controller
             ]);
         } catch (Exception $e) {
             Log::error('Error saving AboutSec2: ' . $e->getMessage());
+
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to save About Section 2.'

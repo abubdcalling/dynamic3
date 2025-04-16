@@ -21,10 +21,12 @@ class NavbarController extends Controller
 
             return response()->json([
                 'success' => true,
+                'message' => 'Navbar data retrieved successfully.',
                 'data' => $navbar
             ]);
         } catch (Exception $e) {
-            Log::error('Error fetching navbar: ' . $e->getMessage());
+            Log::error('NavbarController@show: ' . $e->getMessage());
+
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve navbar data.'
@@ -37,7 +39,6 @@ class NavbarController extends Controller
     {
         try {
             $navbar = Navbar::first();
-
             $logo = $navbar->logo ?? null;
 
             // Handle logo upload
@@ -69,11 +70,12 @@ class NavbarController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Navbar updated successfully.',
+                'message' => 'Navbar saved successfully.',
                 'data' => $navbar
             ]);
         } catch (Exception $e) {
-            Log::error('Error saving navbar: ' . $e->getMessage());
+            Log::error('NavbarController@storeOrUpdate: ' . $e->getMessage());
+
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to save navbar data.'
