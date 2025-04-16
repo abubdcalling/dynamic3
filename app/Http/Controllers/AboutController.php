@@ -2,38 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\About;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Exception;
 
 class AboutController extends Controller
 {
     // Show the first about record
     public function show()
     {
-        $about = About::first();
-        return response()->json($about);
+        try {
+            $about = About::first();
+            return response()->json($about);
+        } catch (Exception $e) {
+            Log::error('Error fetching about content: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to retrieve about section.'], 500);
+        }
     }
 
     // Store or update the About section
     public function storeOrUpdate(Request $request)
     {
-        $about = About::first();
+        try {
+            $about = About::first();
 
-        $data = [
-            'title'         => $request->input('title'),
-            'subtitle'      => $request->input('subtitle'),
-            'description'   => $request->input('description'),
-            'button_name'   => $request->input('button_name'),
-            'button_url'    => $request->input('button_url'),
-        ];
+            $data = [
+                'title'         => $request->input('title'),
+                'subtitle'      => $request->input('subtitle'),
+                'description'   => $request->input('description'),
+                'button_name'   => $request->input('button_name'),
+                'button_url'    => $request->input('button_url'),
+            ];
 
-        if ($about) {
-            $about->update($data);
-        } else {
-            $about = About::create($data);
+            if ($about) {
+                $about->update($data);
+            } else {
+                $about = About::create($data);
+            }
+
+            return response()->json($about);
+        } catch (Exception $e) {
+            Log::error('Error saving about content: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to save about section.'], 500);
         }
-
-        return response()->json($about);
     }
 }
