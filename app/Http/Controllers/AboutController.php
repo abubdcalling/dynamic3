@@ -17,6 +17,7 @@ class AboutController extends Controller
 
             return response()->json([
                 'success' => true,
+                'message' => 'About section fetched successfully.',
                 'data' => $about,
             ]);
         } catch (Exception $e) {
@@ -28,6 +29,7 @@ class AboutController extends Controller
             ], 500);
         }
     }
+
 
     // Store or update the About section
     public function storeOrUpdate(Request $request)
