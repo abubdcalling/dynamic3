@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OurCoreValue;
 use App\Models\PoweredByMrPc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Exception;
 
-class OurCoreValueController extends Controller
+class PoweredByMrPcController extends Controller
 {
     public function show()
     {
