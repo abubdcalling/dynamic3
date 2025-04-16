@@ -44,7 +44,7 @@ class AboutSec2Controller extends Controller
             $imgName = $aboutSec2->img ?? null;
             $videoName = $aboutSec2->video ?? null;
 
-            // Handle image upload
+            // Handle main image upload
             if ($request->hasFile('img')) {
                 $file = $request->file('img');
                 $imgName = time() . '_img.' . $file->getClientOriginalExtension();
@@ -58,25 +58,35 @@ class AboutSec2Controller extends Controller
                 $file->move(public_path('uploads/AboutSec2'), $videoName);
             }
 
+            // Handle icon images (icon1 to icon5)
+            $iconData = [];
+            for ($i = 1; $i <= 5; $i++) {
+                $field = 'icon' . $i;
+                $iconName = $aboutSec2->{$field} ?? null;
+
+                if ($request->hasFile($field)) {
+                    $file = $request->file($field);
+                    $iconName = time() . "_{$field}." . $file->getClientOriginalExtension();
+                    $file->move(public_path('uploads/AboutSec2/icons'), $iconName);
+                }
+
+                $iconData[$field] = $iconName;
+            }
+
             $data = [
                 'title1'       => $request->input('title1'),
                 'description1' => $request->input('description1'),
-                'icon1'        => $request->input('icon1'),
                 'title2'       => $request->input('title2'),
                 'description2' => $request->input('description2'),
-                'icon2'        => $request->input('icon2'),
                 'title3'       => $request->input('title3'),
                 'description3' => $request->input('description3'),
-                'icon3'        => $request->input('icon3'),
                 'title4'       => $request->input('title4'),
                 'description4' => $request->input('description4'),
-                'icon4'        => $request->input('icon4'),
                 'title5'       => $request->input('title5'),
                 'description5' => $request->input('description5'),
-                'icon5'        => $request->input('icon5'),
                 'img'          => $imgName,
                 'video'        => $videoName,
-            ];
+            ] + $iconData;
 
             if ($aboutSec2) {
                 $aboutSec2->update($data);
@@ -84,9 +94,14 @@ class AboutSec2Controller extends Controller
                 $aboutSec2 = AboutSec2::create($data);
             }
 
-            // Add full URLs
+            // Convert file names to URLs
             $aboutSec2->img = $aboutSec2->img ? url('uploads/AboutSec2/' . $aboutSec2->img) : null;
             $aboutSec2->video = $aboutSec2->video ? url('uploads/AboutSec2/' . $aboutSec2->video) : null;
+
+            for ($i = 1; $i <= 5; $i++) {
+                $field = 'icon' . $i;
+                $aboutSec2->{$field} = $aboutSec2->{$field} ? url('uploads/AboutSec2/icons/' . $aboutSec2->{$field}) : null;
+            }
 
             return response()->json([
                 'success' => true,
