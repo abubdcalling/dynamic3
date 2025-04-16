@@ -8,15 +8,36 @@ use Illuminate\Http\Request;
 class Body2Controller extends Controller
 {
     public function show()
-    {
+{
+    try {
         $body2 = Body2::first();
 
         if ($body2 && $body2->icon) {
             $body2->icon = url('uploads/Body2/' . $body2->icon);
         }
 
-        return response()->json($body2);
+        if ($body2) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Data retrieved successfully.',
+                'data' => $body2,
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'No data found.',
+            ], 404);
+        }
+    } catch (\Exception $e) {
+        \Log::error('Error retrieving Body2 data: ' . $e->getMessage());
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to retrieve data.',
+        ], 500);
     }
+}
+
 
     public function storeOrUpdate(Request $request)
     {

@@ -23,6 +23,7 @@ use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\NavbarController;
 use App\Http\Controllers\OurContactController;
+use App\Http\Controllers\PoweredByMrPcController;
 
 /*
 |--------------------------------------------------------------------------
@@ -118,8 +119,14 @@ Route::middleware('auth:api')->group(function () {
 
 // Dynamic3 powered by MrPc from managed services Design
 Route::middleware('auth:api')->group(function () {
-    Route::get('/managedservices/poweredbymrpc', [OurCoreValueController::class, 'show']);
-    Route::post('/managedservices/poweredbymrpc', [OurCoreValueController::class, 'storeOrUpdate']);
+    Route::get('/managedservices/poweredbymrpc', [PoweredByMrPcController::class, 'show']);
+    Route::post('/managedservices/poweredbymrpc', [PoweredByMrPcController::class, 'storeOrUpdate']);
+});
+
+
+Route::middleware('auth:api')->group(function () {
+    Route::get('/managedservices/projectmanagement', [ServiceController::class, 'show']);
+    Route::post('/managedservices/projectmanagement', [ServiceController::class, 'storeOrUpdate']);
 });
 
 
@@ -145,10 +152,6 @@ Route::middleware('auth:api')->group(function () {
 
 
 
-Route::middleware('auth:api')->group(function () {
-    Route::get('/managedservices/projectmanagement', [ServiceController::class, 'show']);
-    Route::post('/managedservices/projectmanagement', [ServiceController::class, 'storeOrUpdate']);
-});
 
 Route::middleware('auth:api')->group(function () {
    
