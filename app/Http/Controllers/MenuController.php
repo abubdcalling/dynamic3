@@ -35,7 +35,7 @@ class MenuController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Menu background image saved successfully.',
+                'message' => 'Background image saved successfully.',
                 'data' => $menu
             ]);
         } catch (Exception $e) {
