@@ -111,7 +111,7 @@ Route::middleware('auth:api')->group(function () {
 // Dynamic3 it from managed services Design
 Route::middleware('auth:api')->group(function () {
     Route::get('/managedservices/it', [OurCoreValueController::class, 'show']);
-    Route::post('/ourcorevalue', [OurCoreValueController::class, 'storeOrUpdate']);
+    Route::post('/managedservices/it', [OurCoreValueController::class, 'storeOrUpdate']);
 });
 
 // Dynamic3 powered by MrPc from managed services Design
