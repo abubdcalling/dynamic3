@@ -14,20 +14,22 @@ class HeroController extends Controller
     {
         try {
             $hero = Hero::first();
-
+    
             return response()->json([
                 'success' => true,
+                'message' => 'Service heading retrieved successfully.',
                 'data' => $hero
             ]);
         } catch (Exception $e) {
-            Log::error('Error fetching service heading: ' . $e->getMessage());
-
+            \Log::error('Error fetching service heading: ' . $e->getMessage());
+    
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve service heading.'
             ], 500);
         }
     }
+    
 
     // Store or update the service heading
     public function storeOrUpdate(Request $request)
