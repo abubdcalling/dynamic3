@@ -14,10 +14,18 @@ class AboutController extends Controller
     {
         try {
             $about = About::first();
-            return response()->json($about);
+
+            return response()->json([
+                'success' => true,
+                'data' => $about,
+            ]);
         } catch (Exception $e) {
             Log::error('Error fetching about content: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to retrieve about section.'], 500);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve about section.'
+            ], 500);
         }
     }
 
@@ -41,10 +49,18 @@ class AboutController extends Controller
                 $about = About::create($data);
             }
 
-            return response()->json($about);
+            return response()->json([
+                'success' => true,
+                'message' => 'About section saved successfully.',
+                'data' => $about,
+            ]);
         } catch (Exception $e) {
             Log::error('Error saving about content: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to save about section.'], 500);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to save about section.'
+            ], 500);
         }
     }
 }
