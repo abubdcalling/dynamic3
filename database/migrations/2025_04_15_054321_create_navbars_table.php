@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('navbars', function (Blueprint $table) {
             $table->id();
             $table->string('logo')->nullable();
+            $table->string('back_img')->nullable();
             $table->string('itemname1')->nullable();
             $table->string('itemlink1')->nullable();
             $table->string('itemname2')->nullable();

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Address;
 use App\Models\Banner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -13,12 +12,10 @@ class BannerController extends Controller
     public function show()
     {
         try {
-            $banner = Address::first();
+            $banner = Banner::first();
 
-            // Add full URL for images
             if ($banner) {
                 $banner->back_img = $banner->back_img ? url('uploads/Banners/' . $banner->back_img) : null;
-                $banner->icon = $banner->icon ? url('uploads/Banners/' . $banner->icon) : null;
             }
 
             return response()->json([
@@ -39,61 +36,54 @@ class BannerController extends Controller
     public function storeOrUpdate(Request $request)
     {
         try {
-            // Optional validation (same rules you used before)
             $validated = $request->validate([
-                'title'    => 'required|string|max:255',
-                'location' => 'required|string|max:500',
-                'img'      => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:2048',
-                'icon'     => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:2048',
+                'heading'      => 'nullable|string|max:255',
+                'title'        => 'nullable|string|max:255',
+                'subtitle'     => 'nullable|string|max:255',
+                'description'  => 'nullable|string',
+                'button_name'  => 'nullable|string|max:255',
+                'button_url'   => 'nullable|string|max:255',
+                'back_img'     => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:2048',
             ]);
 
-            $address = Address::first();
+            $banner = Banner::first();
+            $back_img = $banner->back_img ?? null;
 
-            $img = $address->img ?? null;
-            $icon = $address->icon ?? null;
-
-            // Upload img
-            if ($request->hasFile('img')) {
-                $file = $request->file('img');
-                $img = time() . '_img.' . $file->getClientOriginalExtension();
-                $file->move(public_path('uploads/Addresses'), $img);
-            }
-
-            // Upload icon
-            if ($request->hasFile('icon')) {
-                $file = $request->file('icon');
-                $icon = time() . '_icon.' . $file->getClientOriginalExtension();
-                $file->move(public_path('uploads/Addresses'), $icon);
+            if ($request->hasFile('back_img')) {
+                $file = $request->file('back_img');
+                $back_img = time() . '_banner_back_img.' . $file->getClientOriginalExtension();
+                $file->move(public_path('uploads/Banners'), $back_img);
             }
 
             $data = [
-                'title'    => $validated['title'],
-                'location' => $validated['location'],
-                'img'      => $img,
-                'icon'     => $icon,
+                'heading'      => $validated['heading'] ?? null,
+                'title'        => $validated['title'] ?? null,
+                'subtitle'     => $validated['subtitle'] ?? null,
+                'description'  => $validated['description'] ?? null,
+                'button_name'  => $validated['button_name'] ?? null,
+                'button_url'   => $validated['button_url'] ?? null,
+                'back_img'     => $back_img,
             ];
 
-            if ($address) {
-                $address->update($data);
+            if ($banner) {
+                $banner->update($data);
             } else {
-                $address = Address::create($data);
+                $banner = Banner::create($data);
             }
 
-            // Add full URLs for response
-            $address->img = $address->img ? url('uploads/Addresses/' . $address->img) : null;
-            $address->icon = $address->icon ? url('uploads/Addresses/' . $address->icon) : null;
+            $banner->back_img = $banner->back_img ? url('uploads/Banners/' . $banner->back_img) : null;
 
             return response()->json([
                 'success' => true,
-                'message' => 'Address saved successfully.',
-                'data'    => $address
+                'message' => 'Banner saved successfully.',
+                'data'    => $banner
             ]);
         } catch (Exception $e) {
-            Log::error('Error saving address: ' . $e->getMessage());
+            Log::error('Error saving banner: ' . $e->getMessage());
 
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to save address.',
+                'message' => 'Failed to save banner.',
                 'error'   => $e->getMessage()
             ], 500);
         }

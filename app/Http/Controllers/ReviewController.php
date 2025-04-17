@@ -5,20 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Exception;
 
 class ReviewController extends Controller
 {
+    // Show the first review
     public function show()
     {
         try {
-            $data = Review::first();
+            $review = Review::first();
+
+            if ($review) {
+                $review->img = $review->img ? url('uploads/Reviews/' . $review->img) : null;
+            }
 
             return response()->json([
                 'success' => true,
                 'message' => 'Data retrieved successfully.',
-                'data' => $data
+                'data' => $review
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Error fetching Review data: ' . $e->getMessage());
 
             return response()->json([
@@ -29,27 +35,42 @@ class ReviewController extends Controller
         }
     }
 
+    // Store or update review data
     public function storeOrUpdate(Request $request)
     {
         try {
-            $data = $request->only(['title', 'back_color', 'img']);
+            $review = Review::first();
 
-            $record = Review::first();
+            $img = $review?->img;
 
-            if ($record) {
-                $record->update($data);
+            if ($request->hasFile('img')) {
+                $file = $request->file('img');
+                $img = time() . '_review_img.' . $file->getClientOriginalExtension();
+                $file->move(public_path('uploads/Reviews'), $img);
+            }
+
+            $data = [
+                'title' => $request->input('title'),
+                'back_color' => $request->input('back_color'),
+                'img' => $img
+            ];
+
+            if ($review) {
+                $review->update($data);
                 $message = 'Data updated successfully.';
             } else {
-                $record = Review::create($data);
+                $review = Review::create($data);
                 $message = 'Data created successfully.';
             }
+
+            $review->img = $review->img ? url('uploads/Reviews/' . $review->img) : null;
 
             return response()->json([
                 'success' => true,
                 'message' => $message,
-                'data' => $record
+                'data' => $review
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Error storing/updating Review data: ' . $e->getMessage());
 
             return response()->json([

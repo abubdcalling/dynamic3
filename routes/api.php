@@ -25,6 +25,7 @@ use App\Http\Controllers\NavbarController;
 use App\Http\Controllers\OurContactController;
 use App\Http\Controllers\PoweredByMrPcController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ReviewContentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -168,6 +169,12 @@ Route::middleware('auth:api')->group(function () {
 Route::middleware('auth:api')->group(function () {
     Route::get('/review/heading', [ReviewController::class, 'show']);
     Route::post('/review/heading', [ReviewController::class, 'storeOrUpdate']);
+});
+
+// Dynamic3 review heading Design
+Route::middleware('auth:api')->group(function () {
+    Route::get('/review/content', [ReviewContentController::class, 'show']);
+    Route::post('/review/content', [ReviewContentController::class, 'storeOrUpdate']);
 });
 
 
