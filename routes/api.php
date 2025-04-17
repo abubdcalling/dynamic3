@@ -62,6 +62,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/services/projectmanagement', [Body1Controller::class, 'storeOrUpdate']);
 });
 
+
+
+
 // Dynamic3 support from our service Design
 Route::middleware('auth:api')->group(function () {
     Route::get('/services/support', [Body2Controller::class, 'show']);
@@ -116,6 +119,16 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/managedservices/it', [OurCoreValueController::class, 'show']);
     Route::post('/managedservices/it', [OurCoreValueController::class, 'storeOrUpdate']);
 });
+
+
+
+// Dynamic3 it from managed services Design
+Route::middleware('auth:api')->group(function () {
+    Route::get('/managedservices/whychooseus', [WhyChooseUsController::class, 'show']);
+    Route::post('/managedservices/whychooseus', [WhyChooseUsController::class, 'storeOrUpdate']);
+});
+
+
 
 // Dynamic3 powered by MrPc from managed services Design
 Route::middleware('auth:api')->group(function () {

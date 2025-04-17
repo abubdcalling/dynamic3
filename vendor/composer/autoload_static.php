@@ -578,6 +578,11 @@ class ComposerStaticInitbfe12996eeecb6fdc8713a9fd9d431f8
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\ValidateSignature' => __DIR__ . '/../..' . '/app/Http/Middleware/ValidateSignature.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+<<<<<<< HEAD
+=======
+        'App\\Kernel' => __DIR__ . '/..' . '/laravel/pint/app/Kernel.php',
+        'App\\Mail\\ContactMessageMail' => __DIR__ . '/../..' . '/app/Mail/ContactMessageMail.php',
+>>>>>>> 6295097a465aa34b89b72ae0fb3d98077826ba36
         'App\\Models\\About' => __DIR__ . '/../..' . '/app/Models/About.php',
         'App\\Models\\AboutSec2' => __DIR__ . '/../..' . '/app/Models/AboutSec2.php',
         'App\\Models\\Address' => __DIR__ . '/../..' . '/app/Models/Address.php',
