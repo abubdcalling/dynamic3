@@ -75,6 +75,7 @@ class HomeController extends Controller
             }
 
             $data = [
+                'heading' => $request->input('heading'),
                 'title1' => $request->input('title1'),
                 'description1' => $request->input('description1'),
                 'img1' => $img1,
