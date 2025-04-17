@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title')->nullable();    // Title of the location
             $table->string('location')->nullable(); // Actual location/address
             $table->string('icon')->nullable();
+            $table->string('img')->nullable();
             $table->timestamps();
         });
     }

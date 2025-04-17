@@ -12,6 +12,7 @@ class Address extends Model
         'title',
         'location',
         'icon',
+        'img',
     ];
     
 }
