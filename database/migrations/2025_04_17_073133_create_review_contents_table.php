@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('review_contents', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('star'); // assuming 1 to 5 stars
+            $table->integer('star'); // assuming 1 to 5 stars
             $table->string('back_img')->nullable();
             $table->longText('content')->nullable();
             $table->timestamps();
