@@ -15,8 +15,9 @@ class NavbarController extends Controller
         try {
             $navbar = Navbar::first();
 
-            if ($navbar && $navbar->logo) {
-                $navbar->logo = url('uploads/Navbars/' . $navbar->logo);
+            if ($navbar) {
+                $navbar->logo = $navbar->logo ? url('uploads/Navbars/' . $navbar->logo) : null;
+                $navbar->back_img = $navbar->back_img ? url('uploads/Navbars/' . $navbar->back_img) : null;
             }
 
             return response()->json([
@@ -39,7 +40,9 @@ class NavbarController extends Controller
     {
         try {
             $navbar = Navbar::first();
-            $logo = $navbar->logo ?? null;
+
+            $logo = $navbar?->logo;
+            $back_img = $navbar?->back_img;
 
             // Handle logo upload
             if ($request->hasFile('logo')) {
@@ -48,8 +51,16 @@ class NavbarController extends Controller
                 $file->move(public_path('uploads/Navbars'), $logo);
             }
 
+            // Handle back_img upload
+            if ($request->hasFile('back_img')) {
+                $file = $request->file('back_img');
+                $back_img = time() . '_back_img.' . $file->getClientOriginalExtension();
+                $file->move(public_path('uploads/Navbars'), $back_img);
+            }
+
             $data = [
                 'logo'        => $logo,
+                'back_img'    => $back_img,
                 'itemname1'   => $request->input('itemname1'),
                 'itemlink1'   => $request->input('itemlink1'),
                 'itemname2'   => $request->input('itemname2'),
@@ -66,7 +77,9 @@ class NavbarController extends Controller
                 $navbar = Navbar::create($data);
             }
 
+            // Return with URLs
             $navbar->logo = $navbar->logo ? url('uploads/Navbars/' . $navbar->logo) : null;
+            $navbar->back_img = $navbar->back_img ? url('uploads/Navbars/' . $navbar->back_img) : null;
 
             return response()->json([
                 'success' => true,

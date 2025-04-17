@@ -5,17 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Banner extends Model
+class ReviewContent extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'heading',
-        'title',
-        'subtitle',
-        'description',
-        'button_name',
-        'button_url',
+        'name',
+        'star',
         'back_img',
+        'content',
     ];
-    
 }

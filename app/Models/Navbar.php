@@ -10,6 +10,7 @@ class Navbar extends Model
     use HasFactory;
     protected $fillable = [
         'logo',
+        'back_img',
         'itemname1',
         'itemlink1',
         'itemname2',
