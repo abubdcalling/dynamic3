@@ -120,6 +120,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/managedservices/it', [OurCoreValueController::class, 'storeOrUpdate']);
 });
 
+
+
 // Dynamic3 it from managed services Design
 Route::middleware('auth:api')->group(function () {
     Route::get('/managedservices/whychooseus', [WhyChooseUsController::class, 'show']);
