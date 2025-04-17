@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\ContactMessage;
 use Illuminate\Support\Facades\Log;
 use Exception;
+use App\Mail\ContactMessageMail;
+use Illuminate\Support\Facades\Mail;
 
 class ContactMessageController extends Controller
 {
@@ -15,7 +17,7 @@ class ContactMessageController extends Controller
     {
         try {
             $msg = ContactMessage::first();
-            
+
             if ($msg) {
                 return response()->json([
                     'success' => true,
@@ -51,14 +53,15 @@ class ContactMessageController extends Controller
             ]);
 
             $contact = ContactMessage::create($validated);
+            // Send email to abubdcalling@gmail.com
+            Mail::to('abubdcalling@gmail.com')->send(new ContactMessageMail($contact));
 
             return response()->json([
                 'success' => true,
-                'message' => 'Contact message saved successfully.',
+                'message' => 'Messaage sent successfully.',
                 'last_inserted_id' => $contact->id,
                 'data' => $contact
             ], 201);
-
         } catch (Exception $e) {
             Log::error('Error saving contact message: ' . $e->getMessage());
             return response()->json([
