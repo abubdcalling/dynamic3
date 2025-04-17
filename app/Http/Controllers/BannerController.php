@@ -11,15 +11,28 @@ class BannerController extends Controller
 {
     public function show()
     {
-        $banner = Banner::first();
+        try {
+            $banner = Banner::first();
 
-        // Add full URL for images
-        if ($banner) {
-            $banner->back_img = $banner->back_img ? url('uploads/Banners/' . $banner->back_img) : null;
-            $banner->icon = $banner->icon ? url('uploads/Banners/icons/' . $banner->icon) : null;
+            // Add full URL for images
+            if ($banner) {
+                $banner->back_img = $banner->back_img ? url('uploads/Banners/' . $banner->back_img) : null;
+                $banner->icon = $banner->icon ? url('uploads/Banners/' . $banner->icon) : null;
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Banner retrieved successfully.',
+                'data'    => $banner
+            ]);
+        } catch (Exception $e) {
+            Log::error('Error fetching Banner: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve banner.'
+            ], 500);
         }
-
-        return response()->json($banner);
     }
 
     public function storeOrUpdate(Request $request)
@@ -41,7 +54,7 @@ class BannerController extends Controller
             if ($request->hasFile('icon')) {
                 $file = $request->file('icon');
                 $iconImg = time() . '_icon.' . $file->getClientOriginalExtension();
-                $file->move(public_path('uploads/Banners/icons'), $iconImg);
+                $file->move(public_path('uploads/Banners/'), $iconImg);
             }
 
             $data = [
@@ -60,12 +73,17 @@ class BannerController extends Controller
 
             // Add full URLs for response
             $banner->back_img = $banner->back_img ? url('uploads/Banners/' . $banner->back_img) : null;
-            $banner->icon = $banner->icon ? url('uploads/Banners/icons/' . $banner->icon) : null;
+            $banner->icon = $banner->icon ? url('uploads/Banners/' . $banner->icon) : null;
 
-            return response()->json($banner);
+            return response()->json([
+                'success' => true,
+                'message' => 'Banner saved successfully.',
+                'data'    => $banner
+            ]);
 
         } catch (Exception $e) {
             Log::error('Error saving Banner: ' . $e->getMessage());
+
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to save banner.'

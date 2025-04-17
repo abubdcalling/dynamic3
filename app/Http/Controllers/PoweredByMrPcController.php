@@ -34,7 +34,7 @@ class PoweredByMrPcController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Data Update Failed',
+                'message' => 'Data Retrieved  Failed',
             ], 500);
         }
     }
